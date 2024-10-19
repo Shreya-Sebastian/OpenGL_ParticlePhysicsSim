@@ -2,6 +2,7 @@
 
 uniform mat4 viewProjection;
 uniform vec3 center;
+uniform vec3 containerCenter;
 uniform float radius; 
 
 layout(location = 0) in vec3 position;

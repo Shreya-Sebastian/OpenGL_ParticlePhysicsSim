@@ -14,6 +14,7 @@ void main() {
 
     // ===== Task 2.1 Speed-based Colors =====
 
+
     vec3 finalColor = baseColor;
 
     // ===== Task 2.2 Shading =====
