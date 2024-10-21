@@ -10,6 +10,9 @@ uniform float particleRadius;
 uniform vec3 containerCenter;
 uniform float containerRadius;
 uniform bool interParticleCollision;
+uniform float maxVelocity;
+uniform int collisionCounter;
+uniform int frameCounter;
 
 layout(location = 0) out vec3 finalPosition;
 layout(location = 1) out vec3 finalVelocity;
@@ -30,15 +33,16 @@ void main() {
     finalPosition = previousPos + timestep * previousVel + 0.5f * acc * pow(timestep, 2);
     finalVelocity = previousVel + 0.5f * (acc + acc) * timestep;
 
-    int numCollisions = 0;
+    int numCollisions = int(previousBounceData.x); //set equal to previousBounceData
+    //int frameCount = int(previousBounceData.y);
 
     // ===== Task 1.3 Inter-particle Collision =====
     if (interParticleCollision) {
         for (uint i = 0; i < numParticles; ++i) {
             // Skip self-collision
-            if (i == gl_FragCoord.x) continue;
+            if (i == int(gl_FragCoord.x)) continue;
             
-            vec2 otherParticleIndex = vec2((float(i) / float(numParticles)) + halfTexelStep, 0.f);
+            vec2 otherParticleIndex = vec2(((float(i) + halfTexelStep)/ float(numParticles)), 0.f);
             vec3 otherParticlePosition = texture(previousPositions, otherParticleIndex).xyz;
 
             float dist = distance(finalPosition, otherParticlePosition);
@@ -46,12 +50,10 @@ void main() {
             if(dist <= 2 * particleRadius) //colliding with other particle
             {
                 numCollisions++;
-                
+
                 vec3 dirAway = previousPos - otherParticlePosition;
                 dirAway = normalize(dirAway);
-
                 float relOffset = particleRadius * 0.01f; 
-
                 finalPosition += relOffset * dirAway;
 
                 finalVelocity = reflect(finalVelocity, dirAway);
@@ -64,9 +66,9 @@ void main() {
 
     
     float dist = distance(containerCenter, finalPosition) + particleRadius;
-    
 
     if (dist >= containerRadius){ //colliding with sphere
+        numCollisions++;
     
         vec3 dirToCenter = containerCenter - finalPosition;
     
@@ -77,7 +79,11 @@ void main() {
         finalPosition += relOffset * dirToCenter;
     
         finalVelocity = reflect(finalVelocity, dirToCenter);
-    
+
     }
 
+    float magnitudeVel = clamp(length(finalVelocity), 0, maxVelocity);
+    finalVelocity = normalize(finalVelocity) * magnitudeVel;
+    
+    
 }

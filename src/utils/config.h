@@ -25,4 +25,20 @@ struct Config {
 
     // ===== Part 2: Drawing =====
 
+    bool shading = false;
+    float ambient = 0.2f;
+    glm::vec3 baseColour = glm::vec3(0.f, 0.f, 1.f);
+
+    bool velocityColouring = false;
+    float maxVelocity = 8.f;
+    
+    glm::vec3 zeroColour = glm::vec3(0.f, 1.f, 0.f);
+    glm::vec3 maxColour = glm::vec3(1.f, 0.f, 0.f);
+
+
+    int collisionCounter = 10;
+    int frameCounter = 3;
+
+
+
 };

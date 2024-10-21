@@ -62,5 +62,26 @@ void Menu::drawSphereContainerControls() {
 }
 
 void Menu::drawParticleColorControls() {
+    constexpr float VELOCITY_MAX = 25.0f;
+    constexpr float AMBIENT_MAX = 0.5f;
+
+    ImGui::Checkbox("Shading", &m_config.shading);
+
+    ImGui::ColorEdit3("baseColour", glm::value_ptr(m_config.baseColour));
+
+    ImGui::DragFloat("Ambient", &m_config.ambient, 0.01f, 0.0f, AMBIENT_MAX, "%.2f");
+
+    ImGui::Separator();
+    ImGui::Checkbox("Velocity-based Colouring", &m_config.velocityColouring);
+
+    ImGui::ColorEdit3("ZeroColour", glm::value_ptr(m_config.zeroColour));
+    ImGui::ColorEdit3("MaxColour", glm::value_ptr(m_config.maxColour));
+
+    ImGui::DragFloat("MaxVelocity", &m_config.maxVelocity, 0.01f, 0.0f, VELOCITY_MAX, "%.2f");
+
+    ImGui::Separator();
+    ImGui::InputInt("Collision Counter", &m_config.collisionCounter);
+    ImGui::InputInt("Frame Counter", &m_config.frameCounter);
+
 }
 

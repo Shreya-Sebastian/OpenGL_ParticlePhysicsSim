@@ -160,6 +160,9 @@ void ParticlesSimulator::simulate() {
     glUniform3fv(simulationPass.getUniformLocation("containerCenter"), 1, glm::value_ptr(config.sphereCenter));
     glUniform1f(simulationPass.getUniformLocation("containerRadius"), config.sphereRadius);
     glUniform1i(simulationPass.getUniformLocation("interParticleCollision"), config.particleInterCollision);
+    glUniform1f(simulationPass.getUniformLocation("maxVelocity"), config.maxVelocity);
+    glUniform1i(simulationPass.getUniformLocation("collisionCounter"), config.collisionCounter);
+    glUniform1i(simulationPass.getUniformLocation("frameCounter"), config.frameCounter);
 
     // Render fullscreen quad to 'touch' all texels
     utils::renderQuad(simulationPass);
@@ -190,6 +193,17 @@ void ParticlesSimulator::draw(const glm::mat4& viewProjection) {
     glUniform1ui(drawPass.getUniformLocation("numParticles"), config.numParticles);
     glUniform1f(drawPass.getUniformLocation("particleRadius"), config.particleRadius);
     glUniform3fv(drawPass.getUniformLocation("containerCenter"), 1, glm::value_ptr(config.sphereCenter));
+    glUniform3fv(drawPass.getUniformLocation("zeroColour"), 1, glm::value_ptr(config.zeroColour));
+    glUniform3fv(drawPass.getUniformLocation("maxColour"), 1, glm::value_ptr(config.maxColour));
+    glUniform1f(drawPass.getUniformLocation("maxVelocity"), config.maxVelocity);
+    glUniform1i(drawPass.getUniformLocation("velocityColouring"), config.velocityColouring);
+    glUniform3fv(drawPass.getUniformLocation("baseColour"), 1, glm::value_ptr(config.baseColour));
+    glUniform1f(drawPass.getUniformLocation("ambient"), config.ambient);
+    glUniform1i(drawPass.getUniformLocation("shading"), config.shading);
+    //glUniform1i(drawPass.getUniformLocation("collisionCounter"), config.collisionCounter);
+    //glUniform1i(drawPass.getUniformLocation("frameCounter"), config.frameCounter);
+    
+
     // ===== Part 2: Drawing =====
 
     // Render number of instances equal to number of particles
