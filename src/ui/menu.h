@@ -16,4 +16,6 @@ private:
 
     Config& m_config;
     int32_t m_newParticleCount;
+    int32_t m_collisionCounter;
+    int32_t m_frameCounter;
 };

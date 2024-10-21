@@ -11,8 +11,8 @@ uniform vec3 containerCenter;
 uniform float containerRadius;
 uniform bool interParticleCollision;
 uniform float maxVelocity;
-uniform int collisionCounter;
-uniform int frameCounter;
+uniform uint collisionCounter;
+uniform uint frameCounter;
 
 layout(location = 0) out vec3 finalPosition;
 layout(location = 1) out vec3 finalVelocity;
@@ -33,8 +33,9 @@ void main() {
     finalPosition = previousPos + timestep * previousVel + 0.5f * acc * pow(timestep, 2);
     finalVelocity = previousVel + 0.5f * (acc + acc) * timestep;
 
-    int numCollisions = int(previousBounceData.x); //set equal to previousBounceData
-    //int frameCount = int(previousBounceData.y);
+    uint numCollisions = int(previousBounceData.x); 
+    uint frameCount = int(previousBounceData.y);
+
 
     // ===== Task 1.3 Inter-particle Collision =====
     if (interParticleCollision) {
@@ -58,6 +59,7 @@ void main() {
 
                 finalVelocity = reflect(finalVelocity, dirAway);
             }
+  
         }
     }
 
@@ -69,7 +71,7 @@ void main() {
 
     if (dist >= containerRadius){ //colliding with sphere
         numCollisions++;
-    
+
         vec3 dirToCenter = containerCenter - finalPosition;
     
         dirToCenter = normalize(dirToCenter);
@@ -84,6 +86,20 @@ void main() {
 
     float magnitudeVel = clamp(length(finalVelocity), 0, maxVelocity);
     finalVelocity = normalize(finalVelocity) * magnitudeVel;
+
+
+    if (numCollisions >= collisionCounter)
+    {
+        numCollisions = 0;
+        frameCount = frameCounter+1;
+        
+    }
+
+    if (frameCount > 0)
+    {
+        frameCount--;
+    }
     
-    
+    finalBounceData.x = numCollisions;
+    finalBounceData.y = frameCount;
 }

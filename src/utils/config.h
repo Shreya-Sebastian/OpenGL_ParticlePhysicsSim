@@ -36,8 +36,8 @@ struct Config {
     glm::vec3 maxColour = glm::vec3(1.f, 0.f, 0.f);
 
 
-    int collisionCounter = 10;
-    int frameCounter = 3;
+    uint32_t collisionCounter = 10;
+    uint32_t frameCounter = 3;
 
 
 

@@ -11,6 +11,8 @@ DISABLE_WARNINGS_POP()
 Menu::Menu(Config& config)
 : m_config(config)
 , m_newParticleCount(config.numParticles)
+, m_collisionCounter(config.collisionCounter)
+, m_frameCounter(config.frameCounter)
 {}
 
 void Menu::draw() {
@@ -80,8 +82,9 @@ void Menu::drawParticleColorControls() {
     ImGui::DragFloat("MaxVelocity", &m_config.maxVelocity, 0.01f, 0.0f, VELOCITY_MAX, "%.2f");
 
     ImGui::Separator();
-    ImGui::InputInt("Collision Counter", &m_config.collisionCounter);
-    ImGui::InputInt("Frame Counter", &m_config.frameCounter);
+    m_collisionCounter = std::max(1, m_collisionCounter);
+    ImGui::InputInt("Collision Counter", &m_collisionCounter);
+    ImGui::InputInt("Frame Counter", &m_frameCounter);
 
 }
 
