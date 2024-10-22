@@ -8,6 +8,7 @@ uniform vec3 baseColour;
 uniform bool velocityColouring;
 uniform float ambient; 
 uniform bool shading; 
+uniform bool blinking;
 
 layout(location = 0) in vec3 fragPosition;
 layout(location = 1) in vec3 fragNormal;
@@ -38,10 +39,12 @@ void main() {
 
     // ===== Task 2.2 Shading =====
     
-    
-    if (fragBounceData.y > 0)
+    if (blinking)
     {
-        colour = vec3(1.f, 1.f, 1.f);
+        if (fragBounceData.y > 0)
+        {
+            colour = vec3(1.f, 1.f, 1.f);
+        }
     }
 
     vec3 finalColour = colour;

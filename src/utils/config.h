@@ -39,6 +39,8 @@ struct Config {
     uint32_t collisionCounter = 10;
     uint32_t frameCounter = 3;
 
+    bool blinking = false;
+
 
 
 };

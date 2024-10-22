@@ -200,6 +200,7 @@ void ParticlesSimulator::draw(const glm::mat4& viewProjection) {
     glUniform3fv(drawPass.getUniformLocation("baseColour"), 1, glm::value_ptr(config.baseColour));
     glUniform1f(drawPass.getUniformLocation("ambient"), config.ambient);
     glUniform1i(drawPass.getUniformLocation("shading"), config.shading);
+    glUniform1i(drawPass.getUniformLocation("blinking"), config.blinking);
     
 
     // ===== Part 2: Drawing =====

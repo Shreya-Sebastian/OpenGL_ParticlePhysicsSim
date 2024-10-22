@@ -82,6 +82,7 @@ void Menu::drawParticleColorControls() {
     ImGui::DragFloat("MaxVelocity", &m_config.maxVelocity, 0.01f, 0.0f, VELOCITY_MAX, "%.2f");
 
     ImGui::Separator();
+    ImGui::Checkbox("Blinking", &m_config.blinking);
     m_collisionCounter = std::max(1, m_collisionCounter);
     ImGui::InputInt("Collision Counter", &m_collisionCounter);
     ImGui::InputInt("Frame Counter", &m_frameCounter);
